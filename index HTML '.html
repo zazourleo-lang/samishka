@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e6b5c">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Samishka</title>
+<style>
+:root{--g:#0e6b5c;--y:#f2b632;--bg:#edf2f0;--c:#fff;--t:#14211d;--m:#5f6f69;--b:#d7e0dc}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1512;--c:#16211c;--t:#eaf2ee;--m:#93a39b;--b:#27352e}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);line-height:1.45}
+header{background:var(--g);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:5}
+header h1{font-size:22px;margin:0;flex:1;font-weight:800;letter-spacing:.3px}
+header h1 span{color:var(--y)}
+select,input,textarea,button{font:inherit;color:inherit}
+header select{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:6px}
+header select option{color:#000}
+.hb{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer}
+main{padding:12px;max-width:640px;margin:0 auto}
+#chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+.chip{flex:none;border:1px solid var(--b);background:var(--c);border-radius:20px;padding:6px 13px;cursor:pointer}
+.chip.on{background:var(--g);border-color:var(--g);color:#fff}
+.btn{display:block;width:100%;background:var(--y);color:#2a2000;border:0;border-radius:10px;padding:12px;font-weight:700;margin:6px 0 12px;cursor:pointer}
+.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:13px;margin-bottom:10px}
+.card h3{margin:0 0 4px;font-size:17px}
+.price{font-weight:800;color:var(--g);font-size:18px}
+@media(prefers-color-scheme:dark){.price{color:var(--y)}}
+.meta{color:var(--m);font-size:14px;margin:2px 0 6px}
+.tag{display:inline-block;background:var(--bg);border-radius:6px;padding:1px 8px;font-size:13px;margin-right:4px}
+.row{display:flex;gap:8px;margin-top:8px}
+.wa{background:#1fa855;color:#fff;text-decoration:none;border-radius:8px;padding:8px 14px;font-weight:600}
+.del{background:none;border:1px solid var(--b);border-radius:8px;padding:8px 12px;cursor:pointer}
+dialog{border:0;border-radius:14px;padding:16px;width:min(92vw,420px);background:var(--c);color:var(--t)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h2{margin:0 0 10px;font-size:19px}
+dialog input,dialog select,dialog textarea{display:block;width:100%;margin:0 0 8px;padding:10px;border:1px solid var(--b);border-radius:8px;background:var(--bg)}
+dialog .two{display:flex;gap:8px}
+dialog .two>*{flex:1}
+.acts{display:flex;gap:8px;margin-top:4px}
+.acts button{flex:1;padding:10px;border-radius:8px;border:1px solid var(--b);background:var(--bg);cursor:pointer}
+.acts .p{background:var(--g);border-color:var(--g);color:#fff;font-weight:700}
+#msg{color:var(--g);font-size:14px;min-height:18px;margin-top:6px}
+#empty{color:var(--m);text-align:center;padding:30px 10px}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Sami<span>shka</span></h1>
+  <select id="lang" aria-label="Lang">
+    <option value="ht">Kreyòl</option><option value="fr">Français</option>
+    <option value="en">English</option><option value="es">Español</option>
+  </select>
+  <button class="hb" id="authBtn"></button>
+</header>
+<main>
+  <div id="chips"></div>
+  <button class="btn" id="sellBtn" data-i="sell"></button>
+  <div id="list"></div>
+</main>
+
+<dialog id="authD">
+  <h2 data-i="login"></h2>
+  <input id="em" type="email" autocomplete="email" data-p="email">
+  <input id="pw" type="password" autocomplete="current-password" data-p="pass">
+  <div class="acts">
+    <button class="p" id="loginGo" data-i="login"></button>
+    <button id="signGo" data-i="signup"></button>
+  </div>
+  <div class="acts"><button id="authX" data-i="cancel"></button></div>
+  <div id="msg"></div>
+</dialog>
+
+<dialog id="sellD">
+  <h2 data-i="sell"></h2>
+  <input id="fT" data-p="title" maxlength="80">
+  <div class="two"><input id="fP" type="number" min="0" inputmode="numeric" data-p="price">
+    <select id="fC"><option>HTG</option><option>USD</option></select></div>
+  <div class="two"><select id="fCat"></select><select id="fTy"></select></div>
+  <input id="fCi" data-p="city" maxlength="40">
+  <input id="fPh" type="tel" inputmode="tel" data-p="phone">
+  <textarea id="fD" rows="3" data-p="desc" maxlength="500"></textarea>
+  <div class="acts">
+    <button class="p" id="pubGo" data-i="publish"></button>
+    <button id="sellX" data-i="cancel"></button>
+  </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SB = supabase.createClient(
+  'https://rpbczuhgjvlugtbvtqzt.supabase.co',
+  'sb_publishable_7ABLiTUNz0KnRXSUNJsaNA_4xqxpcN-'
+);
+const CATS = ['house','land','clothes','beauty','tech','other'];
+const T = {
+ht:{all:'Tout',login:'Konekte',signup:'Kreye kont',logout:'Dekonekte',email:'Imèl',pass:'Modpas (6 karaktè oswa plis)',sell:'+ Vann',title:'Tit anons lan',price:'Pri',desc:'Deskripsyon',city:'Vil',phone:'WhatsApp (ex: 50937000000)',publish:'Pibliye',cancel:'Anile',none:'Poko gen anons. Se ou ki premye!',del:'Efase',sale:'Vant',rent:'Lokasyon',confirm:'Tcheke imèl ou pou konfime kont lan.',need:'Konekte anvan ou vann.',done:'Anons pibliye!',err:'Gen yon pwoblèm, eseye ankò.',ask:'Konfime efase anons lan?',
+ cat:{house:'Kay',land:'Teren',clothes:'Rad',beauty:'Bote',tech:'Elektwonik',other:'Lòt'}},
+fr:{all:'Tout',login:'Se connecter',signup:'Créer un compte',logout:'Déconnexion',email:'E-mail',pass:'Mot de passe (6 caractères ou plus)',sell:'+ Vendre',title:'Titre de l’annonce',price:'Prix',desc:'Description',city:'Ville',phone:'WhatsApp (ex : 50937000000)',publish:'Publier',cancel:'Annuler',none:'Aucune annonce pour l’instant. Soyez le premier !',del:'Supprimer',sale:'Vente',rent:'Location',confirm:'Vérifiez votre e-mail pour confirmer le compte.',need:'Connectez-vous pour vendre.',done:'Annonce publiée !',err:'Un problème est survenu, réessayez.',ask:'Supprimer cette annonce ?',
+ cat:{house:'Maison',land:'Terrain',clothes:'Vêtements',beauty:'Beauté',tech:'Électronique',other:'Autre'}},
+en:{all:'All',login:'Log in',signup:'Create account',logout:'Log out',email:'Email',pass:'Password (6+ characters)',sell:'+ Sell',title:'Listing title',price:'Price',desc:'Description',city:'City',phone:'WhatsApp (e.g. 50937000000)',publish:'Publish',cancel:'Cancel',none:'No listings yet. Be the first!',del:'Delete',sale:'For sale',rent:'For rent',confirm:'Check your email to confirm your account.',need:'Log in to sell.',done:'Listing published!',err:'Something went wrong, try again.',ask:'Delete this listing?',
+ cat:{house:'House',land:'Land',clothes:'Clothes',beauty:'Beauty',tech:'Electronics',other:'Other'}},
+es:{all:'Todo',login:'Iniciar sesión',signup:'Crear cuenta',logout:'Cerrar sesión',email:'Correo',pass:'Contraseña (6 caracteres o más)',sell:'+ Vender',title:'Título del anuncio',price:'Precio',desc:'Descripción',city:'Ciudad',phone:'WhatsApp (ej: 50937000000)',publish:'Publicar',cancel:'Cancelar',none:'Aún no hay anuncios. ¡Sé el primero!',del:'Eliminar',sale:'Venta',rent:'Alquiler',confirm:'Revisa tu correo para confirmar la cuenta.',need:'Inicia sesión para vender.',done:'¡Anuncio publicado!',err:'Algo salió mal, inténtalo de nuevo.',ask:'¿Eliminar este anuncio?',
+ cat:{house:'Casa',land:'Terreno',clothes:'Ropa',beauty:'Belleza',tech:'Electrónica',other:'Otro'}}
+};
+const $ = id => document.getElementById(id);
+let lang = 'ht', user = null, cat = 'all', rows = [];
+try { lang = localStorage.getItem('samishka_lang') || 'ht'; } catch (e) {}
+if (!T[lang]) lang = 'ht';
+const t = k => T[lang][k] ?? T.ht[k];
+const cn = c => T[lang].cat[c] ?? T.ht.cat[c];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function ui() {
+  document.documentElement.lang = lang;
+  $('lang').value = lang;
+  document.querySelectorAll('[data-i]').forEach(e => e.textContent = t(e.dataset.i));
+  document.querySelectorAll('[data-p]').forEach(e => e.placeholder = t(e.dataset.p));
+  $('authBtn').textContent = user ? t('logout') : t('login');
+  $('chips').innerHTML = ['all', ...CATS].map(c =>
+    `<button class="chip${c === cat ? ' on' : ''}" onclick="setCat('${c}')">${c === 'all' ? t('all') : cn(c)}</button>`).join('');
+  const keep = $('fCat').value;
+  $('fCat').innerHTML = CATS.map(c => `<option value="${c}">${cn(c)}</option>`).join('');
+  if (keep) $('fCat').value = keep;
+  const kt = $('fTy').value;
+  $('fTy').innerHTML = `<option value="vente">${t('sale')}</option><option value="location">${t('rent')}</option>`;
+  if (kt) $('fTy').value = kt;
+  render();
+}
+function setCat(c) { cat = c; ui(); }
+
+function render() {
+  const list = rows.filter(r => cat === 'all' || r.category === cat);
+  if (!list.length) { $('list').innerHTML = `<div id="empty">${t('none')}</div>`; return; }
+  $('list').innerHTML = list.map(r => {
+    const ph = String(r.phone || '').replace(/\D/g, '');
+    const price = r.price != null ? Number(r.price).toLocaleString() + ' ' + esc(r.currency) : '';
+    return `<div class="card">
+      <h3>${esc(r.title)}</h3>
+      <div class="price">${price}</div>
+      <div class="meta"><span class="tag">${esc(cn(r.category))}</span><span class="tag">${r.type === 'location' ? t('rent') : t('sale')}</span>${esc(r.city)}</div>
+      <div>${esc(r.description)}</div>
+      <div class="row">
+        ${ph ? `<a class="wa" target="_blank" rel="noopener" href="https://wa.me/${ph}">WhatsApp</a>` : ''}
+        ${user && r.user_id === user.id ? `<button class="del" onclick="del('${r.id}')">${t('del')}</button>` : ''}
+      </div></div>`;
+  }).join('');
+}
+
+async function load() {
+  const { data, error } = await SB.from('listings').select('*').order('created_at', { ascending: false }).limit(100);
+  if (error) { $('list').innerHTML = `<div id="empty">${t('err')}</div>`; return; }
+  rows = data; render();
+}
+async function del(id) {
+  if (!confirm(t('ask'))) return;
+  const { error } = await SB.from('listings').delete().eq('id', id);
+  if (error) alert(t('err')); else load();
+}
+async function auth(mode) {
+  const email = $('em').value.trim(), password = $('pw').value;
+  $('msg').textContent = '';
+  const r = mode === 'up' ? await SB.auth.signUp({ email, password }) : await SB.auth.signInWithPassword({ email, password });
+  if (r.error) { $('msg').textContent = r.error.message; return; }
+  if (mode === 'up' && !r.data.session) { $('msg').textContent = t('confirm'); return; }
+  $('authD').close();
+}
+
+$('lang').onchange = e => { lang = e.target.value; try { localStorage.setItem('samishka_lang', lang); } catch (x) {} ui(); };
+$('authBtn').onclick = async () => { if (user) { await SB.auth.signOut(); } else { $('msg').textContent = ''; $('authD').showModal(); } };
+$('authX').onclick = () => $('authD').close();
+$('loginGo').onclick = () => auth('in');
+$('signGo').onclick = () => auth('up');
+$('sellBtn').onclick = () => { if (!user) { $('msg').textContent = t('need'); $('authD').showModal(); } else $('sellD').showModal(); };
+$('sellX').onclick = () => $('sellD').close();
+$('pubGo').onclick = async () => {
+  const title = $('fT').value.trim();
+  if (!title) { $('fT').focus(); return; }
+  const { error } = await SB.from('listings').insert({
+    title, description: $('fD').value.trim(), price: $('fP').value ? Number($('fP').value) : null,
+    currency: $('fC').value, category: $('fCat').value, type: $('fTy').value,
+    city: $('fCi').value.trim(), phone: $('fPh').value.trim()
+  });
+  if (error) { alert(t('err')); return; }
+  ['fT','fP','fCi','fPh','fD'].forEach(i => $(i).value = '');
+  $('sellD').close(); alert(t('done')); load();
+};
+SB.auth.onAuthStateChange((_e, s) => { user = s ? s.user : null; ui(); });
+SB.auth.getSession().then(({ data }) => { user = data.session ? data.session.user : null; ui(); load(); });
+ui();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
