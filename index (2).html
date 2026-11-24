@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#00209f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Samishka</title>
+<style>
+:root{--bl:#00209f;--rd:#d21034;--bg:#f4f6fb;--t:#111827;--m:#5b6577;--b:#e3e7f0}
+*{box-sizing:border-box}
+body{margin:0;padding-bottom:84px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);line-height:1.4}
+select,input,textarea,button{font:inherit;color:inherit}
+button{cursor:pointer}
+#hd{position:sticky;top:0;z-index:20;background:#fff;display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:3px solid var(--rd)}
+.ib{background:none;border:0;font-size:24px;padding:2px 6px;line-height:1}
+.logo{flex:1;font-size:21px;font-weight:800;color:var(--bl);white-space:nowrap}
+.logo span{color:var(--rd)}
+#lang{border:1px solid var(--b);border-radius:10px;padding:6px;background:#fff;max-width:96px}
+.sellTop{background:var(--rd);color:#fff;border:0;border-radius:20px;padding:8px 13px;font-weight:700;font-size:14px;white-space:nowrap}
+.sbar{display:flex;margin:10px 12px 0;border:2px solid var(--t);border-radius:12px;overflow:hidden;background:#fff}
+.sbar input{flex:1;min-width:0;border:0;padding:12px;outline:0}
+.sbar button{background:var(--rd);border:0;color:#fff;padding:0 18px;font-size:18px}
+main{padding:12px;max-width:680px;margin:0 auto}
+#car{position:relative;height:168px;border-radius:18px;overflow:hidden}
+.sl{position:absolute;inset:0;display:flex;align-items:center;padding:22px;color:#fff;opacity:0;transition:opacity .6s;background:linear-gradient(135deg,#00127a,var(--bl) 60%,#2146d6)}
+.sl:nth-child(2){background:linear-gradient(135deg,#8f0a25,var(--rd))}
+.sl:nth-child(3){background:linear-gradient(135deg,#2146d6,#00127a)}
+.sl.on{opacity:1}
+.sl b{font-size:24px;line-height:1.2}
+#dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+#dots i{width:8px;height:8px;border-radius:5px;background:rgba(255,255,255,.5)}
+#dots i.on{width:22px;background:#fff}
+.cta{margin:14px 0;background:linear-gradient(160deg,#e11d48,#8f0a25);color:#fff;border-radius:22px;padding:20px;text-align:center}
+.cta h3{margin:0 0 12px;font-size:21px}
+.cta button{width:100%;background:#fff;color:var(--rd);border:0;border-radius:12px;padding:13px;font-weight:800}
+.sec h3,.how h3{margin:16px 0 8px;font-size:20px}
+#cats{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 10px}
+.cc{flex:none;width:96px;background:#fff;border:1px solid var(--b);border-radius:16px;padding:12px 4px;text-align:center;font-size:13px;font-weight:600}
+.cc i{display:grid;place-items:center;width:54px;height:54px;margin:0 auto 6px;border-radius:50%;background:var(--bg);font-style:normal;font-size:26px}
+.cc.on{border-color:var(--bl);box-shadow:inset 0 0 0 2px var(--bl)}
+.hrow{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+.hrow .pc{flex:none;width:168px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--b);border-radius:16px;padding:10px;margin:14px 0 10px}
+.bar b{flex:1 0 100%}
+.bar select{border:1px solid var(--b);border-radius:10px;padding:7px;background:#fff}
+.bar small{color:var(--m);margin-left:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pc{background:#fff;border:1px solid var(--b);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.ph{aspect-ratio:1;display:grid;place-items:center;font-size:46px;background:linear-gradient(135deg,#e8edff,#ffe8ed)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.pb{padding:10px;display:flex;flex-direction:column;gap:3px;flex:1}
+.pb h4{margin:0;font-size:14px;line-height:1.25}
+.pr{font-weight:800;font-size:17px;color:var(--bl)}
+.og,.mt{font-size:12px;color:var(--m)}
+.ds{font-size:13px;color:var(--m);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pa{display:flex;gap:6px;margin-top:auto;padding-top:8px}
+.wa{flex:1;text-align:center;background:#1fa855;color:#fff;border-radius:10px;padding:9px 4px;font-weight:700;font-size:13px;text-decoration:none}
+.fv,.dx{background:#fff;border:1px solid var(--b);border-radius:10px;padding:0 10px;font-size:17px;color:var(--rd)}
+.box{background:#fff;border:1px solid var(--b);border-radius:16px;padding:14px;margin:10px 0}
+.btn{display:block;width:100%;background:var(--bl);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700}
+#empty{grid-column:1/-1;color:var(--m);text-align:center;padding:34px 10px;background:#fff;border-radius:16px}
+.how{background:linear-gradient(160deg,var(--bl),#00127a);color:#fff;border-radius:22px;padding:6px 16px 16px;margin:16px 0}
+.how div{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.12);border-radius:12px;padding:10px;margin-top:8px}
+.how i{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#fff;color:var(--bl);font-style:normal;font-weight:800}
+.note{background:#fff3e0;color:#6b4513;border:1px solid #f1d9b4;border-radius:14px;padding:12px;font-size:14px}
+#help{background:#e8edff;border:1px solid #cdd7ff;border-radius:14px;padding:14px;text-align:center;margin:12px 0}
+#help b{display:block}
+.supb{display:block;margin-top:10px;background:var(--bl);color:#fff;text-decoration:none;border-radius:12px;padding:12px;font-weight:700}
+.rate{text-align:center;color:var(--m);font-size:13px}
+.rate a{color:var(--m)}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;gap:4px;background:#fff;border-top:1px solid var(--b);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:15}
+nav button{flex:1;background:none;border:0;border-radius:14px;padding:7px 0;font-size:13px;display:flex;flex-direction:column;align-items:center;color:var(--m)}
+nav button b{font-size:21px;font-weight:400;line-height:1.1}
+nav button.on{background:#e8edff;color:var(--bl);font-weight:700}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:30;display:none}
+#dr{position:fixed;top:0;bottom:0;left:0;width:80%;max-width:320px;background:#fff;z-index:31;transform:translateX(-100%);transition:transform .25s;overflow-y:auto}
+#dr.open{transform:none}
+.dh{background:linear-gradient(135deg,var(--bl),#2146d6);color:#fff;padding:18px 16px;display:flex;justify-content:space-between;align-items:center}
+.dh .ib{color:#fff}
+.dh b{font-size:21px}
+.dt{padding:14px 16px 4px;color:var(--m);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.dl{display:block;width:100%;text-align:left;background:none;border:0;padding:11px 16px;font-size:16px;color:var(--t);text-decoration:none}
+#toast{position:fixed;left:12px;right:12px;bottom:92px;background:var(--t);color:#fff;border-radius:12px;padding:12px;z-index:40;display:none;text-align:center}
+dialog{border:0;border-radius:14px;padding:16px;width:min(92vw,420px);color:var(--t)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h2{margin:0 0 10px;font-size:19px}
+dialog input,dialog select,dialog textarea{display:block;width:100%;margin:0 0 8px;padding:10px;border:1px solid var(--b);border-radius:8px;background:var(--bg)}
+dialog .two{display:flex;gap:8px}
+dialog .two>*{flex:1}
+#conv{color:var(--m);font-size:13px;min-height:16px;margin:-2px 0 6px}
+.acts{display:flex;gap:8px;margin-top:4px}
+.acts button{flex:1;padding:10px;border-radius:8px;border:1px solid var(--b);background:var(--bg)}
+.acts .p{background:var(--bl);border-color:var(--bl);color:#fff;font-weight:700}
+#msg{color:var(--rd);font-size:14px;min-height:18px;margin-top:6px}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--rd);outline-offset:2px}
+</style>
+</head>
+<body>
+<header id="hd">
+  <button class="ib" id="menuB" aria-label="Menu">☰</button>
+  <div class="logo">Sami<span>shka</span></div>
+  <select id="lang" aria-label="Lang">
+    <option value="ht">Kreyòl</option><option value="fr">Français</option>
+    <option value="en">English</option><option value="es">Español</option>
+  </select>
+  <button class="sellTop" id="sellTop" data-i="becomeSeller"></button>
+</header>
+<div class="sbar"><input id="q" data-p="search" enterkeyhint="search"><button id="qBtn" aria-label="Search">🔍</button></div>
+<main>
+  <div id="homeTop">
+    <div id="car">
+      <div class="sl on"><b>🛍️ <span data-i="tag"></span></b></div>
+      <div class="sl"><b>🏠 <span data-i="s2"></span></b></div>
+      <div class="sl"><b>💱 <span data-i="s3"></span></b></div>
+      <div id="dots"><i class="on"></i><i></i><i></i></div>
+    </div>
+    <div class="cta"><h3 data-i="ctaT"></h3><button id="ctaB"></button></div>
+    <div class="sec"><h3 data-i="byCat"></h3></div>
+    <div id="cats"></div>
+    <div id="newSec"><div class="sec"><h3 data-i="newest"></h3></div><div class="hrow" id="newRow"></div></div>
+  </div>
+  <div id="acct"></div>
+  <div class="bar" id="bar">
+    <b id="cnt"></b>
+    <select id="sort"></select>
+    <select id="cur"><option value="HTG">🇭🇹 HTG</option><option value="USD">🇺🇸 USD</option></select>
+    <small id="rateTop"></small>
+  </div>
+  <div class="grid" id="list"></div>
+  <div id="homeBot">
+    <div class="how"><h3 data-i="how"></h3>
+      <div><i>1</i><span data-i="h1"></span></div>
+      <div><i>2</i><span data-i="h2"></span></div>
+      <div><i>3</i><span data-i="h3"></span></div>
+      <div><i>4</i><span data-i="h4"></span></div>
+    </div>
+    <div class="note" data-i="safe"></div>
+    <div id="help"><b data-i="helpT"></b><span data-i="helpD"></span><a class="supb" id="sup" target="_blank" rel="noopener" data-i="support"></a></div>
+    <p class="rate" id="rate"></p>
+  </div>
+</main>
+<nav>
+  <button id="nHome"><b>⌂</b><span data-i="home"></span></button>
+  <button id="nFavs"><b>♡</b><span data-i="favs"></span></button>
+  <button id="nPub"><b>+</b><span data-i="pub"></span></button>
+  <button id="nMe"><b>☺</b><span data-i="me"></span></button>
+</nav>
+<div id="ov"></div>
+<aside id="dr"></aside>
+<div id="toast"></div>
+
+<dialog id="authD">
+  <h2 data-i="login"></h2>
+  <input id="em" type="email" autocomplete="email" data-p="email">
+  <input id="pw" type="password" autocomplete="current-password" data-p="pass">
+  <div class="acts">
+    <button class="p" id="loginGo" data-i="login"></button>
+    <button id="signGo" data-i="signup"></button>
+  </div>
+  <div class="acts"><button id="authX" data-i="cancel"></button></div>
+  <div id="msg"></div>
+</dialog>
+
+<dialog id="sellD">
+  <h2 data-i="sell"></h2>
+  <input id="fT" data-p="title" maxlength="80">
+  <div class="two"><input id="fP" type="number" min="0" inputmode="numeric" data-p="price">
+    <select id="fC"><option>HTG</option><option>USD</option></select></div>
+  <div id="conv"></div>
+  <div class="two"><select id="fCat"></select><select id="fTy"></select></div>
+  <input id="fCi" data-p="city" maxlength="40">
+  <input id="fPh" type="tel" inputmode="tel" data-p="phone">
+  <textarea id="fD" rows="3" data-p="desc" maxlength="500"></textarea>
+  <div class="acts">
+    <button class="p" id="pubGo" data-i="publish"></button>
+    <button id="sellX" data-i="cancel"></button>
+  </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SB = supabase.createClient(
+  'https://rpbczuhgjvlugtbvtqzt.supabase.co',
+  'sb_publishable_7ABLiTUNz0KnRXSUNJsaNA_4xqxpcN-'
+);
+const SUPPORT = '50941444209';
+const ADMIN = 'toulousekalid@gmail.com';
+const API = 'https://open.er-api.com/v6/latest/USD';
+const CATS = ['house','land','clothes','beauty','tech','other'];
+const EM = {house:'🏠',land:'🌴',clothes:'👕',beauty:'💄',tech:'🎧',other:'✨'};
+const T = {
+ht:{all:'Tout',login:'Konekte',signup:'Kreye kont',logout:'Dekonekte',email:'Imèl',pass:'Modpas (6 karaktè oswa plis)',sell:'Pibliye yon anons',title:'Tit anons lan',price:'Pri',desc:'Deskripsyon',city:'Vil',phone:'WhatsApp (ex: 50937000000)',publish:'Pibliye',cancel:'Anile',none:'Poko gen anons. Se ou ki premye!',del:'Efase',sale:'Vant',rent:'Lokasyon',confirm:'Tcheke imèl ou pou konfime kont lan.',need:'Konekte anvan ou kontinye.',done:'Anons pibliye!',err:'Gen yon pwoblèm, eseye ankò.',ask:'Konfime efase anons lan?',
+ tag:'Sa w ap chèche a, pre oswa lwen.',search:'Chèche pwodwi, kategori…',ads:'Anons',safe:'Toujou verifye pwodwi a, vandè a ak kondisyon peman anvan ou achte. Rankontre nan yon kote ki an sekirite.',helpT:'Bezwen èd?',helpD:'Yon kesyon, yon pwoblèm oswa yon lide? Ekri nou sou WhatsApp.',support:'Sipò · WhatsApp',rate:'Konvèsyon apwoksimatif',home:'Akèy',favs:'Favori',pub:'Pibliye',me:'Mwen',favNone:'Poko gen favori.',
+ becomeSeller:'Vin Vandè',byCat:'Achte pa kategori',newest:'🆕 Fèk rive',sortNew:'Pi nouvo',sortLow:'Pri ki pi ba',sortHigh:'Pri ki pi wo',s2:'Dyaspora: vann kay ou ak tè ou an Ayiti.',s3:'Pri an G ak $, taux la ajou otomatikman.',ctaT:'Vin vandè sou Samishka',how:'Ki jan pou vann',h1:'Kreye kont ou',h2:'Chwazi kategori a',h3:'Mete pri a ak nimewo WhatsApp ou',h4:'Pibliye anons lan',acct:'Kont mwen',cats:'Kategori',menu:'Meni',orig:'pri orijinal',newRate:'Nouvo taux',
+ rateAdmin:'Taux dola a',rateHint:'1 $ = konbyen G? Tout moun ap wè taux sa a.',save:'Anrejistre',rateAuto:'Retounen nan taux otomatik',rateSaved:'Taux anrejistre.',
+ cat:{house:'Kay',land:'Teren',clothes:'Rad',beauty:'Bote',tech:'Elektwonik',other:'Lòt'}},
+fr:{all:'Tout',login:'Se connecter',signup:'Créer un compte',logout:'Déconnexion',email:'E-mail',pass:'Mot de passe (6 caractères ou plus)',sell:'Publier une annonce',title:'Titre de l’annonce',price:'Prix',desc:'Description',city:'Ville',phone:'WhatsApp (ex : 50937000000)',publish:'Publier',cancel:'Annuler',none:'Aucune annonce pour l’instant. Soyez le premier !',del:'Supprimer',sale:'Vente',rent:'Location',confirm:'Vérifiez votre e-mail pour confirmer le compte.',need:'Connectez-vous pour continuer.',done:'Annonce publiée !',err:'Un problème est survenu, réessayez.',ask:'Supprimer cette annonce ?',
+ tag:'Ce que tu cherches, près ou loin.',search:'Chercher un produit, une catégorie…',ads:'Annonces',safe:'Vérifie toujours le produit, le vendeur et les conditions de paiement avant tout achat. Rencontre-toi dans un lieu sûr.',helpT:'Besoin d’aide ?',helpD:'Une question, un problème ou une idée ? Écris-nous sur WhatsApp.',support:'Sipò · Support WhatsApp',rate:'Conversion approximative',home:'Accueil',favs:'Favoris',pub:'Publier',me:'Moi',favNone:'Aucun favori pour l’instant.',
+ becomeSeller:'Devenir vendeur',byCat:'Acheter par catégorie',newest:'🆕 Nouveautés',sortNew:'Plus récent',sortLow:'Prix croissant',sortHigh:'Prix décroissant',s2:'Diaspora : vends ta maison et ton terrain en Haïti.',s3:'Prix en G et en $, taux mis à jour automatiquement.',ctaT:'Deviens vendeur sur Samishka',how:'Comment vendre',h1:'Crée ton compte',h2:'Choisis une catégorie',h3:'Indique ton prix et ton numéro WhatsApp',h4:'Publie ton annonce',acct:'Mon compte',cats:'Catégories',menu:'Menu',orig:'prix d’origine',newRate:'Nouveau taux',
+ rateAdmin:'Taux du dollar',rateHint:'1 $ = combien de G ? Tout le monde verra ce taux.',save:'Enregistrer',rateAuto:'Revenir au taux automatique',rateSaved:'Taux enregistré.',
+ cat:{house:'Maison',land:'Terrain',clothes:'Vêtements',beauty:'Beauté',tech:'Électronique',other:'Autre'}},
+en:{all:'All',login:'Log in',signup:'Create account',logout:'Log out',email:'Email',pass:'Password (6+ characters)',sell:'Post a listing',title:'Listing title',price:'Price',desc:'Description',city:'City',phone:'WhatsApp (e.g. 50937000000)',publish:'Publish',cancel:'Cancel',none:'No listings yet. Be the first!',del:'Delete',sale:'For sale',rent:'For rent',confirm:'Check your email to confirm your account.',need:'Log in to continue.',done:'Listing published!',err:'Something went wrong, try again.',ask:'Delete this listing?',
+ tag:'What you’re looking for, near or far.',search:'Search products, categories…',ads:'Listings',safe:'Always check the product, the seller and the payment terms before buying. Meet in a safe place.',helpT:'Need help?',helpD:'A question, a problem or an idea? Write to us on WhatsApp.',support:'Support · WhatsApp',rate:'Approximate conversion',home:'Home',favs:'Favorites',pub:'Post',me:'Me',favNone:'No favorites yet.',
+ becomeSeller:'Become a seller',byCat:'Shop by category',newest:'🆕 New arrivals',sortNew:'Newest',sortLow:'Price: low to high',sortHigh:'Price: high to low',s2:'Diaspora: sell your house and land in Haiti.',s3:'Prices in G and $, rate updated automatically.',ctaT:'Become a seller on Samishka',how:'How to sell',h1:'Create your account',h2:'Pick a category',h3:'Add your price and WhatsApp number',h4:'Publish your listing',acct:'My account',cats:'Categories',menu:'Menu',orig:'original price',newRate:'New rate',
+ rateAdmin:'Dollar rate',rateHint:'1 $ = how many G? Everyone will see this rate.',save:'Save',rateAuto:'Back to automatic rate',rateSaved:'Rate saved.',
+ cat:{house:'House',land:'Land',clothes:'Clothes',beauty:'Beauty',tech:'Electronics',other:'Other'}},
+es:{all:'Todo',login:'Iniciar sesión',signup:'Crear cuenta',logout:'Cerrar sesión',email:'Correo',pass:'Contraseña (6 caracteres o más)',sell:'Publicar un anuncio',title:'Título del anuncio',price:'Precio',desc:'Descripción',city:'Ciudad',phone:'WhatsApp (ej: 50937000000)',publish:'Publicar',cancel:'Cancelar',none:'Aún no hay anuncios. ¡Sé el primero!',del:'Eliminar',sale:'Venta',rent:'Alquiler',confirm:'Revisa tu correo para confirmar la cuenta.',need:'Inicia sesión para continuar.',done:'¡Anuncio publicado!',err:'Algo salió mal, inténtalo de nuevo.',ask:'¿Eliminar este anuncio?',
+ tag:'Lo que buscas, cerca o lejos.',search:'Buscar productos, categorías…',ads:'Anuncios',safe:'Verifica siempre el producto, al vendedor y las condiciones de pago antes de comprar. Reúnete en un lugar seguro.',helpT:'¿Necesitas ayuda?',helpD:'¿Una pregunta, un problema o una idea? Escríbenos por WhatsApp.',support:'Soporte · WhatsApp',rate:'Conversión aproximada',home:'Inicio',favs:'Favoritos',pub:'Publicar',me:'Yo',favNone:'Aún no hay favoritos.',
+ becomeSeller:'Ser vendedor',byCat:'Comprar por categoría',newest:'🆕 Novedades',sortNew:'Más reciente',sortLow:'Precio: menor a mayor',sortHigh:'Precio: mayor a menor',s2:'Diáspora: vende tu casa y tu terreno en Haití.',s3:'Precios en G y $, tasa actualizada automáticamente.',ctaT:'Sé vendedor en Samishka',how:'Cómo vender',h1:'Crea tu cuenta',h2:'Elige una categoría',h3:'Pon tu precio y tu WhatsApp',h4:'Publica tu anuncio',acct:'Mi cuenta',cats:'Categorías',menu:'Menú',orig:'precio original',newRate:'Nueva tasa',
+ rateAdmin:'Tasa del dólar',rateHint:'¿1 $ = cuántas G? Todos verán esta tasa.',save:'Guardar',rateAuto:'Volver a la tasa automática',rateSaved:'Tasa guardada.',
+ cat:{house:'Casa',land:'Terreno',clothes:'Ropa',beauty:'Belleza',tech:'Electrónica',other:'Otro'}}
+};
+const $ = id => document.getElementById(id);
+let lang = 'ht', user = null, cat = 'all', rows = [], view = 'home', disp = 'HTG', sort = 'new', q = '', favs = new Set(), RATE = 131, si = 0, MANUAL = false, apiT = 0, known = false;
+try { lang = localStorage.getItem('samishka_lang') || 'ht'; RATE = Number(localStorage.getItem('samishka_rate')) || 131; known = !!localStorage.getItem('samishka_rate'); } catch (e) {}
+if (!T[lang]) lang = 'ht';
+const t = k => T[lang][k] ?? T.ht[k];
+const cn = c => T[lang].cat[c] ?? T.ht.cat[c];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function fmt(v, c) {
+  if (c === 'USD') return '$' + (v >= 100 ? Math.round(v) : Number(v.toFixed(2))).toLocaleString();
+  return 'HTG ' + Math.round(v).toLocaleString();
+}
+function price(r) {
+  if (r.price == null) return ['', ''];
+  const v = Number(r.price), c = r.currency === 'USD' ? 'USD' : 'HTG';
+  const m = c === disp ? v : disp === 'USD' ? v / RATE : v * RATE;
+  return [fmt(m, disp), c === disp ? '' : fmt(v, c) + ' · ' + t('orig')];
+}
+function pcard(r) {
+  const ph = String(r.phone || '').replace(/\D/g, ''), [m, o] = price(r);
+  const img = /^https?:/.test(r.photo_url || '') ? `<img loading="lazy" alt="" src="${esc(r.photo_url)}">` : (EM[r.category] || '✨');
+  return `<div class="pc"><div class="ph">${img}</div><div class="pb">
+    <h4>${esc(r.title)}</h4><div class="pr">${m}</div>${o ? `<div class="og">${esc(o)}</div>` : ''}
+    <div class="mt">${esc(cn(r.category))} · ${r.type === 'location' ? t('rent') : t('sale')}${r.city ? ' · ' + esc(r.city) : ''}</div>
+    ${r.description ? `<div class="ds">${esc(r.description)}</div>` : ''}
+    <div class="pa">${ph ? `<a class="wa" target="_blank" rel="noopener" href="https://wa.me/${ph}">WhatsApp</a>` : ''}
+    ${user && r.user_id === user.id ? `<button class="dx" aria-label="${t('del')}" onclick="del('${r.id}')">🗑</button>` : ''}
+    <button class="fv" aria-label="Favori" onclick="tog('${r.id}')">${favs.has(r.id) ? '♥' : '♡'}</button></div></div></div>`;
+}
+
+function ui() {
+  document.documentElement.lang = lang;
+  $('lang').value = lang;
+  document.querySelectorAll('[data-i]').forEach(e => e.textContent = t(e.dataset.i));
+  document.querySelectorAll('[data-p]').forEach(e => e.placeholder = t(e.dataset.p));
+  $('ctaB').textContent = t('becomeSeller') + ' →';
+  const keep = $('fCat').value;
+  $('fCat').innerHTML = CATS.map(c => `<option value="${c}">${cn(c)}</option>`).join('');
+  if (keep) $('fCat').value = keep;
+  const kt = $('fTy').value;
+  $('fTy').innerHTML = `<option value="vente">${t('sale')}</option><option value="location">${t('rent')}</option>`;
+  if (kt) $('fTy').value = kt;
+  $('sort').innerHTML = `<option value="new">${t('sortNew')}</option><option value="low">${t('sortLow')}</option><option value="high">${t('sortHigh')}</option>`;
+  $('sort').value = sort;
+  $('sup').href = 'https://wa.me/' + SUPPORT;
+  $('help').style.display = SUPPORT ? '' : 'none';
+  render();
+}
+function render() {
+  const home = view === 'home';
+  $('homeTop').style.display = $('homeBot').style.display = home ? '' : 'none';
+  $('cats').innerHTML = ['all', ...CATS].map(c =>
+    `<button class="cc${c === cat ? ' on' : ''}" onclick="setCat('${c}')"><i>${c === 'all' ? '🛍️' : EM[c]}</i>${c === 'all' ? t('all') : cn(c)}</button>`).join('');
+  $('newSec').style.display = rows.length ? '' : 'none';
+  $('newRow').innerHTML = rows.slice(0, 8).map(pcard).join('');
+  [['nHome','home'],['nFavs','favs'],['nMe','me']].forEach(([id, v]) => $(id).classList.toggle('on', v === view));
+  $('rate').innerHTML = `${t('rate')} · 1 $ = ${RATE.toFixed(2)} G` + (MANUAL ? '' : ` · <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">exchangerate-api.com</a>`);
+  $('rateTop').textContent = '1 $ = ' + RATE.toFixed(2) + ' G';
+  $('cur').value = disp;
+  let list;
+  if (view === 'favs') list = rows.filter(r => favs.has(r.id));
+  else if (view === 'me') list = user ? rows.filter(r => r.user_id === user.id) : [];
+  else list = rows.filter(r => (cat === 'all' || r.category === cat) &&
+    (!q || (r.title + ' ' + (r.description || '') + ' ' + (r.city || '')).toLowerCase().includes(q)));
+  const hv = r => r.price == null ? 0 : r.currency === 'USD' ? r.price * RATE : Number(r.price);
+  const nl = (a, b) => (a.price == null) - (b.price == null);
+  if (sort === 'low') list = [...list].sort((a, b) => nl(a, b) || hv(a) - hv(b));
+  if (sort === 'high') list = [...list].sort((a, b) => nl(a, b) || hv(b) - hv(a));
+  $('cnt').textContent = `${view === 'favs' ? t('favs') : view === 'me' ? t('me') : t('ads')} : ${list.length}`;
+  $('acct').innerHTML = view !== 'me' ? '' : user
+    ? `<div class="box"><b>${esc(user.email)}</b><div style="margin-top:8px"><button class="dx" style="padding:8px 14px;font-size:15px;color:var(--t)" onclick="out()">${t('logout')}</button></div></div>` + admBox()
+    : `<div class="box"><p>${t('need')}</p><button class="btn" onclick="openAuth()">${t('login')}</button></div>`;
+  $('list').innerHTML = list.length ? list.map(pcard).join('')
+    : (view !== 'me' || user) ? `<div id="empty">${view === 'favs' ? t('favNone') : t('none')}</div>` : '';
+  drawer();
+}
+function drawer() {
+  const L = (a, x) => `<button class="dl" onclick="${a}">${x}</button>`;
+  $('dr').innerHTML = `<div class="dh"><div><small>${t('menu')}</small><br><b>Samishka</b></div><button class="ib" onclick="closeDr()" aria-label="X">✕</button></div>
+    <div class="dt">${t('acct')}</div>` +
+    (user ? L("closeDr();setView('me')", '👤 ' + esc(user.email)) + L('closeDr();out()', '↩ ' + t('logout'))
+          : L('closeDr();openAuth()', '🔑 ' + t('login')) + L('closeDr();openAuth()', '✨ ' + t('signup'))) +
+    `<div class="dt">${t('cats')}</div>` +
+    ['all', ...CATS].map(c => L(`closeDr();setCat('${c}')`, c === 'all' ? '🛍️ ' + t('all') : EM[c] + ' ' + cn(c))).join('') +
+    `<div style="padding:12px 16px"><button class="btn" onclick="closeDr();openSell()">${t('becomeSeller')}</button></div>` +
+    (SUPPORT ? `<a class="dl" target="_blank" rel="noopener" href="https://wa.me/${SUPPORT}">💬 ${t('support')}</a>` : '');
+}
+function openDr() { $('dr').classList.add('open'); $('ov').style.display = 'block'; }
+function closeDr() { $('dr').classList.remove('open'); $('ov').style.display = 'none'; }
+function setCat(c) { cat = c; view = 'home'; render(); $('bar').scrollIntoView({ behavior: 'smooth' }); }
+function setView(v) { view = v; window.scrollTo(0, 0); render(); }
+function toast(m) { const e = $('toast'); e.textContent = m; e.style.display = 'block'; setTimeout(() => e.style.display = 'none', 5000); }
+
+function applyRate(v) {
+  if (!(v > 0)) return;
+  const old = RATE; RATE = Math.round(v * 100) / 100;
+  try { localStorage.setItem('samishka_rate', RATE); } catch (e) {}
+  if (known && Math.abs(RATE - old) >= 0.01) toast(`${t('newRate')} : 1 $ = ${RATE.toFixed(2)} G`);
+  known = true; render();
+}
+async function getRate() {
+  let v = 0;
+  try { const { data } = await SB.from('settings').select('value').eq('key', 'usd_htg').maybeSingle(); v = Number(data && data.value) || 0; } catch (e) {}
+  MANUAL = v > 0;
+  if (!MANUAL && Date.now() - apiT > 3600e3) {
+    try { const j = await (await fetch(API)).json(); v = Number(j.rates && j.rates.HTG) || 0; if (v) apiT = Date.now(); } catch (e) {}
+  }
+  if (v > 0) applyRate(v); else render();
+}
+function admBox() {
+  if (!user || !ADMIN || (user.email || '').toLowerCase() !== ADMIN) return '';
+  return `<div class="box"><b>💱 ${t('rateAdmin')}</b><p class="mt">${t('rateHint')}</p>
+  <div style="display:flex;gap:8px"><input id="rIn" type="number" step="0.01" inputmode="decimal" value="${RATE.toFixed(2)}" style="flex:1;min-width:0;border:1px solid var(--b);border-radius:10px;padding:10px"><button class="btn" style="width:auto;padding:0 18px" onclick="saveRate()">${t('save')}</button></div>
+  <button class="dx" style="margin-top:8px;padding:9px 12px;font-size:14px;color:var(--t)" onclick="autoRate()">${t('rateAuto')}</button></div>`;
+}
+async function setRate(val) {
+  const { error } = await SB.from('settings').upsert({ key: 'usd_htg', value: val, updated_at: new Date().toISOString() });
+  if (error) { alert(t('err')); return false; }
+  return true;
+}
+async function saveRate() { const v = Number($('rIn').value); if (!(v > 0)) return; if (await setRate(String(v))) { toast(t('rateSaved')); getRate(); } }
+async function autoRate() { if (await setRate('')) { apiT = 0; toast(t('rateSaved')); getRate(); } }
+function conv() {
+  const v = Number($('fP').value);
+  $('conv').textContent = !v ? '' : $('fC').value === 'USD' ? '≈ ' + fmt(v * RATE, 'HTG') : '≈ ' + fmt(v / RATE, 'USD');
+}
+
+async function load() {
+  const { data, error } = await SB.from('listings').select('*').order('created_at', { ascending: false }).limit(100);
+  if (error) { $('list').innerHTML = `<div id="empty">${t('err')}</div>`; return; }
+  rows = data; render();
+}
+async function loadFavs() {
+  favs = new Set();
+  if (user) { const { data } = await SB.from('favorites').select('listing_id'); (data || []).forEach(f => favs.add(f.listing_id)); }
+}
+async function tog(id) {
+  if (!user) { openAuth(); return; }
+  if (favs.has(id)) { favs.delete(id); render(); await SB.from('favorites').delete().eq('listing_id', id); }
+  else { favs.add(id); render(); await SB.from('favorites').insert({ listing_id: id }); }
+}
+async function del(id) {
+  if (!confirm(t('ask'))) return;
+  const { error } = await SB.from('listings').delete().eq('id', id);
+  if (error) alert(t('err')); else load();
+}
+function openAuth() { $('msg').textContent = ''; $('authD').showModal(); }
+function openSell() { if (!user) { openAuth(); $('msg').textContent = t('need'); } else { conv(); $('sellD').showModal(); } }
+function out() { SB.auth.signOut(); }
+async function auth(mode) {
+  const email = $('em').value.trim(), password = $('pw').value;
+  $('msg').textContent = '';
+  const r = mode === 'up' ? await SB.auth.signUp({ email, password }) : await SB.auth.signInWithPassword({ email, password });
+  if (r.error) { $('msg').textContent = r.error.message; return; }
+  if (mode === 'up' && !r.data.session) { $('msg').textContent = t('confirm'); return; }
+  $('authD').close();
+}
+
+$('lang').onchange = e => { lang = e.target.value; try { localStorage.setItem('samishka_lang', lang); } catch (x) {} ui(); };
+$('menuB').onclick = openDr;
+$('ov').onclick = closeDr;
+$('qBtn').onclick = () => { q = $('q').value.trim().toLowerCase(); view = 'home'; render(); $('bar').scrollIntoView({ behavior: 'smooth' }); };
+$('q').onkeydown = e => { if (e.key === 'Enter') $('qBtn').click(); };
+$('cur').onchange = e => { disp = e.target.value; render(); };
+$('sort').onchange = e => { sort = e.target.value; render(); };
+$('sellTop').onclick = $('ctaB').onclick = $('nPub').onclick = openSell;
+$('nHome').onclick = () => setView('home');
+$('nFavs').onclick = () => setView('favs');
+$('nMe').onclick = () => setView('me');
+$('authX').onclick = () => $('authD').close();
+$('loginGo').onclick = () => auth('in');
+$('signGo').onclick = () => auth('up');
+$('sellX').onclick = () => $('sellD').close();
+$('fP').oninput = $('fC').onchange = conv;
+$('pubGo').onclick = async () => {
+  const title = $('fT').value.trim();
+  if (!title) { $('fT').focus(); return; }
+  const { error } = await SB.from('listings').insert({
+    title, description: $('fD').value.trim(), price: $('fP').value ? Number($('fP').value) : null,
+    currency: $('fC').value, category: $('fCat').value, type: $('fTy').value,
+    city: $('fCi').value.trim(), phone: $('fPh').value.trim()
+  });
+  if (error) { alert(t('err')); return; }
+  ['fT','fP','fCi','fPh','fD'].forEach(i => $(i).value = '');
+  $('sellD').close(); alert(t('done')); setView('home'); load();
+};
+setInterval(() => {
+  si = (si + 1) % 3;
+  document.querySelectorAll('.sl').forEach((e, i) => e.classList.toggle('on', i === si));
+  document.querySelectorAll('#dots i').forEach((e, i) => e.classList.toggle('on', i === si));
+}, 4500);
+SB.auth.onAuthStateChange((_e, s) => {
+  user = s ? s.user : null;
+  setTimeout(async () => { await loadFavs(); render(); }, 0);
+});
+SB.auth.getSession().then(async ({ data }) => { user = data.session ? data.session.user : null; await loadFavs(); ui(); load(); });
+ui();
+getRate();
+setInterval(getRate, 300e3);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) getRate(); });
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
